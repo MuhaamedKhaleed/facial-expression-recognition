@@ -1,0 +1,30 @@
+{
+  "synthetic_only": true,
+  "scope": "invented_constant_pixels_not_faces_not_human_internal_emotions",
+  "quality_claim": false,
+  "result": {
+    "training": {
+      "validation_loss": 1.9899743795394897,
+      "validation_accuracy": 0.0,
+      "train_rows": 2,
+      "validation_rows": 1
+    },
+    "explicit_synthetic_test": {
+      "test_loss": 1.9419715404510498,
+      "test_accuracy": 0.0,
+      "test_rows": 1,
+      "labels": [
+        "Angry",
+        "Disgust",
+        "Fear",
+        "Happy",
+        "Sad",
+        "Surprise",
+        "Neutral"
+      ],
+      "predicted_indices": [
+        1
+      ]
+    }
+  }
+}
