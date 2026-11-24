@@ -10,3 +10,8 @@
 - Strict FER CSV/pixel/label/duplicate checks, original-width CPU CNN CLI and explicit final scoring.
 - Actual synthetic backend/CLI/data tests, uv lock, Ruff/mypy/hooks, data-only Docker/CI.
 - Honest privacy, consent, bias, dataset-label and model-quality limits.
+
+
+### Engineering follow-up
+- Use the committed uv lock in CI and key dependency-installer caching by that lock.
+- Complete copy-only profile README drafts and clarify historical versus current verification.
