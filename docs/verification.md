@@ -23,3 +23,10 @@ Installable src package, meaningful data/model/CLI split, typed functions, actio
 ## Deliberate changes and limits
 
 Strict CSV replaces implicit Colab uploads. Require all predefined partitions, reject exact duplicate pixels everywhere, never drop silently. A real corpus may fail until duplicate-label/partition review. Only structure is read across all partitions during training; PrivateTest labels are not used to optimize/validate. No subject IDs, no near-duplicate or subject-independence proof. No frozen external test, full notebook run, real-data macro-F1/confusion/bias/calibration, human review, production inference/camera service, or demographic/generalization result. Repeated explicit test evaluation still compromises test independence. Local `.keras` must be trusted. Artifacts are not saved transactionally. Dataset categories must not be treated as mental state, medical diagnosis, personality or intent. No face/model/data is published.
+
+
+## Gap-closure follow-up (24 November 2026)
+
+The CI source now uses uv 0.13.8 and the committed transitive lock, rather than a new pip resolution of direct pins. Dependency installer caching is keyed by uv.lock. The local matching command is `uv sync --locked --extra dev --extra ml`, followed by the existing tests/quality commands. This does not cache or publish private datasets, weights or model outputs. Public-repository-only guards remain. The changed workflow's hosted outcome must be checked after publication; prior green runs do not validate a changed workflow.
+
+A complete copy-only project-focused profile README draft is appended to presentation.md. No profile account edits, main merge, PR, release or license change is implied by that text. Historical notebook/full-data/quality limitations remain open, not replaced by a passing synthetic test.
