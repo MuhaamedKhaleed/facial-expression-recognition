@@ -93,7 +93,9 @@ def main():
     (args.output / "split-hashes.json").write_text(json.dumps(ledger))
     result = {
         "architecture": "original32/64/64conv,dense64,7softmax",
-        "protocol": "same12304train677internaldev as earlier alternative, exactpixel dedup",
+        "protocol": (
+            "same12304train677internaldev as earlier alternative, exactpixel dedup"
+        ),
         "source": "https://www.kaggle.com/datasets/msambare/fer2013",
         "seed": 42,
         "batch_size": 128,
@@ -103,7 +105,10 @@ def main():
         "augmentation": False,
         "history": history,
         "test_folder_read": False,
-        "limits": "different protocol from historical randomsplit54.47%, not replication; reuseddev not untouched benchmark or emotion inference",
+        "limits": (
+            "different protocol from historical randomsplit54.47%, "
+            "not replication; reuseddev not untouched benchmark or emotion inference"
+        ),
         "model_sha256": hashlib.sha256(
             (args.output / "model.keras").read_bytes()
         ).hexdigest(),
