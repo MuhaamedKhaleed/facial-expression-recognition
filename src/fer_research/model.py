@@ -85,7 +85,7 @@ def evaluate(data: Path, artifact: Path) -> dict[str, Any]:
     """Explicitly score PrivateTest, never invoked from training."""
     if artifact.suffix != ".keras" or not artifact.is_file():
         raise ValueError("Supply a trusted local .keras model file.")
-    x, y = read(data)["PrivateTest"]
+    x, y = read(data, only="PrivateTest")["PrivateTest"]
     tf = backend()
     model = tf.keras.models.load_model(artifact, safe_mode=True)
     if model.input_shape[1:] != (48, 48, 1) or model.output_shape[-1] != 7:
