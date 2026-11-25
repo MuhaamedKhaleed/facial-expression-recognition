@@ -89,3 +89,39 @@ def test_training_never_consumes_test_labels(tmp_path: Path) -> None:
     with patch("fer_research.model.build", return_value=Model()):
         train(data, tmp_path / "capture", 1, 2)
     assert captured == splits["Training"][1].tolist() == [0, 1]
+
+
+def test_predict_crop_reload_and_cli(tmp_path: Path) -> None:
+    from PIL import Image
+
+    from fer_research.model import predict
+
+    artifact = tmp_path / "model.keras"
+    build().save(artifact)
+    (tmp_path / "labels.json").write_text(
+        json.dumps(
+            list(reversed(__import__("fer_research.core", fromlist=["LABELS"]).LABELS))
+        )
+    )
+    image = tmp_path / "crop.png"
+    Image.new("RGB", (67, 59), (120, 90, 60)).save(image)
+    result = predict(image, artifact)
+    assert len(result["probabilities"]) == 7
+    assert sum(result["probabilities"].values()) == pytest.approx(1)
+    assert result["category"] in result["probabilities"]
+    assert "not evidence" in result["warning"]
+    response = CliRunner().invoke(app, ["predict", str(image), str(artifact)])
+    assert response.exit_code == 0, response.output
+    assert json.loads(response.output) == result
+    with pytest.raises(ValueError):
+        predict(image, tmp_path / "missing.keras")
+    bad = tf.keras.Sequential(
+        [
+            tf.keras.layers.Input((48, 48, 1)),
+            tf.keras.layers.Flatten(),
+            tf.keras.layers.Dense(6),
+        ]
+    )
+    bad.save(tmp_path / "bad.keras")
+    with pytest.raises(ValueError):
+        predict(image, tmp_path / "bad.keras")
