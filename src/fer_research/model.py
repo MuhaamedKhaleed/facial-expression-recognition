@@ -91,7 +91,7 @@ def evaluate(data: Path, artifact: Path) -> dict[str, Any]:
     if model.input_shape[1:] != (48, 48, 1) or model.output_shape[-1] != 7:
         raise ValueError("Model must have48x48x1 input and seven-category output.")
     loss, accuracy = map(float, model.evaluate(x, y, verbose=0))
-    prediction = model(x, training=False).numpy()
+    prediction = model.predict(x, batch_size=64, verbose=0)
     if not math.isfinite(loss) or not math.isfinite(accuracy):
         raise ValueError("Nonfinite test metrics.")
     return {
