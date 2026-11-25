@@ -92,3 +92,8 @@ See [commands, saved output and scope](docs/synthetic-demo.md). This is invented
 ## Portable notebook follow-up
 
 The root notebook now uses the supported local package with safe defaults and explicit data/training opt-ins. It replaces the platform-specific experiment rather than reproducing historical results. See `docs/notebook-migration.md` and the notebook settings. Earlier descriptions of live notebook downloads/hard-coded paths are historical and superseded. No dataset or weight rights are granted.
+
+
+## Ordinary-image inference follow-up
+
+See [commands, artifact contracts and limits](docs/fix-pass.md). This adds explicit local inference, not a new model-quality claim.
