@@ -72,3 +72,15 @@ def evaluate(data: Path, model: Path) -> None:
         return score(data, model)
 
     run(action)
+
+
+@app.command()
+def predict(image: Path, model: Path) -> None:
+    """Classify one supplied face crop, not an internal emotion or whole scene."""
+
+    def action() -> dict[str, Any]:
+        from .model import predict as classify
+
+        return classify(image, model)
+
+    run(action)
