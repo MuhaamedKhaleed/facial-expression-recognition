@@ -14,14 +14,20 @@ PARTITIONS = ("Training", "PublicTest", "PrivateTest")
 Data = dict[str, tuple[NDArray[np.float32], NDArray[np.int64]]]
 
 
-def read(path: Path) -> Data:
+def read(path: Path, *, only: str | None = None) -> Data:
     """Require valid2304-pixel rows, labels0..6, explicit Usage partitions.
 
     Reject exact pixel duplicates anywhere, including across partitions. This
     protects this experiment, not a claim that the source dataset is clean.
+    With ``only``, every row is still validated and duplicate-checked, but only
+    that partition's arrays are materialized, so final scoring of a large
+    corpus does not hold all partitions in memory.
     """
-    values: dict[str, list[list[int]]] = {p: [] for p in PARTITIONS}
-    labels: dict[str, list[int]] = {p: [] for p in PARTITIONS}
+    if only is not None and only not in PARTITIONS:
+        raise ValueError(f"Unknown partition {only}.")
+    wanted = PARTITIONS if only is None else (only,)
+    values: dict[str, list[list[int]]] = {p: [] for p in wanted}
+    labels: dict[str, list[int]] = {p: [] for p in wanted}
     seen = set()
     with path.open(encoding="utf-8", newline="") as stream:
         rows = csv.DictReader(stream)
@@ -58,14 +64,17 @@ def read(path: Path) -> Data:
                     "review labels/partitions before fitting."
                 )
             seen.add(key)
-            values[usage].append(pixels)
-            labels[usage].append(label)
-    if any(not values[p] for p in PARTITIONS):
-        raise ValueError("All three Usage partitions must be nonempty.")
+            if usage in values:
+                values[usage].append(pixels)
+                labels[usage].append(label)
+    if any(not values[p] for p in wanted):
+        if only is None:
+            raise ValueError("All three Usage partitions must be nonempty.")
+        raise ValueError(f"Partition {only} must be nonempty.")
     return {
         p: (
             np.asarray(values[p], dtype=np.float32).reshape(-1, 48, 48, 1) / 255,
             np.asarray(labels[p], dtype=np.int64),
         )
-        for p in PARTITIONS
+        for p in wanted
     }
