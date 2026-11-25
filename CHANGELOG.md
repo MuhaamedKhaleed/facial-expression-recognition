@@ -16,6 +16,11 @@
 - Use the committed uv lock in CI and key dependency-installer caching by that lock.
 - Complete copy-only profile README drafts and clarify historical versus current verification.
 
+### Real-data CSV route follow-up
+- Pinned fetch script for the original FER2013 challenge CSV mirror and a reviewed-dedup preparation script with a removal ledger.
+- Batched final-test prediction in `evaluate`; the previous single forward pass over every PrivateTest row exhausted memory on real-sized data.
+- Documented verified fetch-to-final-test commands, metrics and a separately licensed pretrained baseline link.
+
 ### Synthetic demonstration follow-up
 
 Added standalone invented-input backend demo, checked JSON output and documented limits. Opt-in ML container added where a model backend exists; default lightweight image unchanged. Hosted container verification is required separately.
