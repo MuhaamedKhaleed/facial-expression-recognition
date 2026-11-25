@@ -97,3 +97,8 @@ The root notebook now uses the supported local package with safe defaults and ex
 ## Ordinary-image inference follow-up
 
 See [commands, artifact contracts and limits](docs/fix-pass.md). This adds explicit local inference, not a new model-quality claim.
+
+
+## Real-data route and pretrained baseline
+
+See [commands, pinned source, duplicate-review ledger, verified metrics and limits](docs/real-data-csv.md). A fresh clone can fetch the pinned original-challenge CSV, prepare it with counted duplicate review, train the original-width CNN on 27473 rows and score 0.5067 accuracy on the reserved 3268-row PrivateTest partition once. A separately licensed pretrained baseline is linked with its own pinned weights hash; its card numbers use a different split and protocol and are not comparable.
