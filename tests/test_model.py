@@ -6,7 +6,7 @@ import pytest
 from typer.testing import CliRunner
 
 from fer_research.cli import app
-from fer_research.core import read
+from fer_research.core import LABELS, read
 from fer_research.model import build, evaluate, train
 
 tf = pytest.importorskip("tensorflow")
@@ -98,11 +98,7 @@ def test_predict_crop_reload_and_cli(tmp_path: Path) -> None:
 
     artifact = tmp_path / "model.keras"
     build().save(artifact)
-    (tmp_path / "labels.json").write_text(
-        json.dumps(
-            list(reversed(__import__("fer_research.core", fromlist=["LABELS"]).LABELS))
-        )
-    )
+    (tmp_path / "labels.json").write_text(json.dumps(list(reversed(LABELS))))
     image = tmp_path / "crop.png"
     Image.new("RGB", (67, 59), (120, 90, 60)).save(image)
     result = predict(image, artifact)
