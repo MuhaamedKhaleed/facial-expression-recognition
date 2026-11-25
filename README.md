@@ -2,6 +2,20 @@
 
 An explicit local CPU CNN workflow for FER2013-style category labels. It validates predefined partitions and keeps final-test scoring separate from fitting. It does **not** infer a person's true feelings, health, character or intent, and is not a surveillance, hiring or diagnostic tool.
 
+## Real-data quickstart (about 5 minutes)
+
+Needs Python 3.11 or 3.12 (the locked PyTorch/TensorFlow wheels have no 3.13+ build); `--python 3.11` makes uv fetch it. Needs internet for the first install and downloads, and roughly 2 GB of free RAM.
+
+```sh
+uv sync --python 3.11 --locked --extra dev --extra ml
+uv run --no-sync python scripts/fetch_fer2013.py --output fer-src                 # 300 MB, pinned mirror, hash checked
+uv run --no-sync python scripts/prepare_fer2013.py --input fer-src/icml_face_data.csv --output fer-prepared
+uv run --no-sync fer-research train fer-prepared/fer2013.csv fer-trained --epochs 2 --batch-size 128
+uv run --no-sync fer-research evaluate fer-prepared/fer2013.csv fer-trained/model.keras
+uv run --no-sync fer-research predict FACE_CROP.png fer-trained/model.keras
+```
+Output: `fer-trained/model.keras`, test accuracy, and a per-image emotion category with probabilities. A fresh-clone run on 25 Nov 2026 trained 2 epochs in under 100 s on one CPU core, reaching 0.42 test accuracy. More `--epochs` is the main knob. `evaluate` prints one prediction per test row, so redirect it to a file. Scored on FER2013, which has its own terms; see `LICENSE-SCOPE.md`.
+
 ## Install and invented demo
 
 Python3.11/3.12, Linuxx86_64, uv installed:
