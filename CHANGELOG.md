@@ -18,7 +18,7 @@
 
 ### Real-data CSV route follow-up
 - Pinned fetch script for the original FER2013 challenge CSV mirror and a reviewed-dedup preparation script with a removal ledger.
-- Batched final-test prediction in `evaluate`; the previous single forward pass over every PrivateTest row exhausted memory on real-sized data.
+- Batched final-test prediction in `evaluate`; the previous single forward pass over every PrivateTest row exhausted memory on real-sized data. `evaluate` now also validates every row but materializes only PrivateTest arrays, so the documented full-CSV route is verified on a 1-CPU 2 GB machine.
 - Documented verified fetch-to-final-test commands, metrics and a separately licensed pretrained baseline link.
 
 ### Synthetic demonstration follow-up
