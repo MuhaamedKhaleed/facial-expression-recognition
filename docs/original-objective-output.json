@@ -1,0 +1,46 @@
+{
+  "architecture": "original32/64/64conv,dense64,7softmax",
+  "protocol": "same12304train677internaldev as earlier alternative, exactpixel dedup",
+  "source": "https://www.kaggle.com/datasets/msambare/fer2013",
+  "seed": 42,
+  "batch_size": 128,
+  "epochs": 5,
+  "train": 12304,
+  "dev": 677,
+  "augmentation": false,
+  "history": [
+    {
+      "epoch": 1,
+      "dev_accuracy": 0.2658788774002954,
+      "dev_macro_f1": 0.19720151038910078,
+      "seconds": 12.66940398700001
+    },
+    {
+      "epoch": 2,
+      "dev_accuracy": 0.33234859675036926,
+      "dev_macro_f1": 0.28878049788094645,
+      "seconds": 24.117579595999928
+    },
+    {
+      "epoch": 3,
+      "dev_accuracy": 0.38404726735598227,
+      "dev_macro_f1": 0.3431242645787086,
+      "seconds": 35.72902199099997
+    },
+    {
+      "epoch": 4,
+      "dev_accuracy": 0.39586410635155095,
+      "dev_macro_f1": 0.3401143996317845,
+      "seconds": 46.83537475000003
+    },
+    {
+      "epoch": 5,
+      "dev_accuracy": 0.3914327917282127,
+      "dev_macro_f1": 0.33265548115023413,
+      "seconds": 57.74842803599995
+    }
+  ],
+  "test_folder_read": false,
+  "limits": "different protocol from historical randomsplit54.47%, not replication; reuseddev not untouched benchmark or emotion inference",
+  "model_sha256": "e42498cccfbd372ab3e297f06f7c6561ffc3809cb9ea689013e4379012faeb43"
+}
