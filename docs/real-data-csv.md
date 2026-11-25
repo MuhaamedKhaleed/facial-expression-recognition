@@ -30,13 +30,26 @@ improvement.md, so this route measures on the original held-out partitions.
 first occurrence and counting every removal in `ledger.json`. Observed on the
 pinned file: 1853 duplicate rows removed (1210 same label and partition, 643
 with conflicting label or partition), 34034 rows kept
-(Training 27473, PublicTest 3293, PrivateTest 3268). The raw file and ledger
-stay local.
+(Training 27473, PublicTest 3293, PrivateTest 3268). Conflicting-duplicate
+policy, explicitly: the raw file stores partitions contiguously in the order
+Training, then PublicTest, then PrivateTest, and the script keeps the first
+occurrence in file order. For each of the 643 conflicting groups the kept copy
+is therefore the Training copy over PublicTest, or PublicTest over PrivateTest,
+and the kept label is whichever label appeared on that earlier row. That
+retention is deterministic for the pinned file but is a file-order artifact,
+not an adjudicated label decision; alternatives such as dropping every
+conflicting copy or majority-label voting were not applied. All removals are
+counted in `ledger.json` so the choice is auditable and reversible by editing
+the script. The raw file and ledger stay local.
 
 ## Verified run
 
-Python 3.12, Linux x86_64, 1 CPU, TensorFlow 2.18.0, locked environment, seed
-42, 25 November 2026. `check-data` accepted the prepared CSV. Training 10
+Python 3.12, Linux x86_64, 1 CPU with 2 GB RAM, TensorFlow 2.18.0, locked
+environment, seed 42, 25 November 2026. The full route below was run exactly as
+written on the complete prepared CSV, including final `evaluate`: every row is
+validated and duplicate-checked, but `evaluate` materializes only PrivateTest
+arrays, so the whole route fits this constrained box. `check-data` accepted the
+prepared CSV. Training 10
 epochs at batch 128 took about four minutes:
 `validation_loss 1.3199, validation_accuracy 0.5120` (PublicTest only).
 `evaluate` scored the reserved partition once:
