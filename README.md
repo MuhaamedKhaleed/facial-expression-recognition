@@ -54,7 +54,7 @@ TF_CPP_MIN_LOG_LEVEL=3 TF_NUM_INTRAOP_THREADS=1 TF_NUM_INTEROP_THREADS=1 OMP_NUM
 
 These exact commands were tested on invented arrays only. Training refuses an existing output directory, uses original three-convolution CNN widths32/64/64 and seven-category softmax, saves `model.keras` plus `validation.json` after finite metrics. CPU-only, no silent GPU or remote process. `evaluate` loads an explicitly supplied trusted local `.keras` model with `safe_mode=True` and scores only PrivateTest. No remote or pickle loading is offered. A model file must be trusted even with safe mode.
 
-Metrics are sparse cross-entropy and aggregate classification accuracy. No real FER accuracy, macro-F1, calibrated confidence, demographic fairness, subject-independent or real-world quality is claimed. Invented demo accuracy has no useful model-quality meaning. Large real-data training can take significant time/memory.
+Metrics are sparse cross-entropy and aggregate classification accuracy. The synthetic commands give no model-quality meaning. Real-data accuracy is reported above and in `docs/real-data-csv.md` (about 0.42 to 0.51 test accuracy on FER2013); no macro-F1, calibrated confidence, demographic fairness, subject-independent or real-world quality is claimed. Invented demo accuracy has no useful model-quality meaning. Large real-data training can take significant time/memory.
 
 ## Engineering checks
 
@@ -77,7 +77,7 @@ docker run --rm fer-research:ci --help
 docker run --rm -v "$PWD/synthetic-demo:/data:ro" fer-research:ci check-data --data /data/fer.csv
 ```
 
-Multi-stage slim non-root runtime, no TensorFlow/dev dependencies. It checks data only, not fitting/evaluation. Hosted CI verifies build/run; no local Docker daemon is claimed. Public-repository-only ordinary Linux workflow, no paid APIs, hosted training, deployment or private billable runners. Local uv lock is Linuxx86_64-scoped; CI pip uses pinned direct dependencies, not the full transitive lock. Windows/macOS/ARM/GPU are unverified.
+Multi-stage slim non-root runtime, no TensorFlow/dev dependencies. It checks data only, not fitting/evaluation. Hosted CI verifies the Docker build/run. Public-repository-only ordinary Linux workflow, no paid APIs, hosted training, deployment or private billable runners. Local uv lock is Linuxx86_64-scoped; CI pip uses pinned direct dependencies, not the full transitive lock. Windows/macOS/ARM/GPU are unverified.
 
 ## Layout
 
@@ -92,7 +92,7 @@ Typer CLI -> JSON output / separate stderr errors
 
 Next work: review a licensed real corpus and duplicates, freeze an untouched subject-independent test where possible, measure per-class/macro metrics, inspect confusion/error/bias slices and document consent and use limitations. Do not turn dataset categories into claims about a person.
 
-[Verification](docs/verification.md), [changelog](CHANGELOG.md), [copy-only presentation](docs/presentation.md). No main merge, license change, release/tag, real face/model/data publication.
+[Verification](docs/verification.md), [changelog](CHANGELOG.md), [copy-only presentation](docs/presentation.md). No release/tag; no real faces, models or data are published.
 
 
 ## License scope
